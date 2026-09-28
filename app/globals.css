@@ -1,0 +1,102 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --forest: #145A32;
+  --leaf: #2E7D32;
+  --fresh: #74B816;
+  --sand: #E8F5E9;
+  --ink: #123524;
+}
+
+html { scroll-behavior: smooth; }
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+
+body {
+  font-family: "Plus Jakarta Sans", Inter, Manrope, system-ui, sans-serif;
+  background: #F9FFF9;
+  color: #123524;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+.dark body, .dark-body { background: #081C15; color: #F4FFF5; }
+.dark { background: #081C15; color: #F4FFF5; color-scheme: dark; }
+
+/* Preloader fail-safe: hides even if React/JS hydration fails */
+#wgc-loader { animation: wgcLoaderHide .7s ease 3.5s forwards; }
+@keyframes wgcLoaderHide { to { opacity: 0; visibility: hidden; pointer-events: none; } }
+
+.font-serif, h1, h2, h3 { font-family: "Cormorant Garamond", "DM Serif Display", "Playfair Display", Georgia, serif; }
+
+::selection { background: #74B816; color: #081C15; }
+
+/* organic grain + texture */
+.grain::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .07; mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.dark .grain::after { mix-blend-mode: screen; opacity: .08; }
+
+.glass { backdrop-filter: blur(18px) saturate(1.4); -webkit-backdrop-filter: blur(18px) saturate(1.4); }
+
+.text-balance { text-wrap: balance; }
+
+/* vine underline for headings */
+.vine-underline { position: relative; display: inline-block; }
+.vine-underline > svg { position: absolute; left: 0; right: 0; bottom: -12px; width: 100%; height: 18px; overflow: visible; }
+.vine-underline path { stroke-dasharray: 600; stroke-dashoffset: 600; animation: growvine 1.6s .4s ease forwards; }
+@keyframes growvine { to { stroke-dashoffset: 0; } }
+
+/* leaf mask cards */
+.leaf-mask { border-radius: 46% 54% 58% 42% / 8% 8% 12% 12%; border-radius: 28px 120px 28px 120px; }
+.leaf-mask-alt { border-radius: 120px 28px 120px 28px; }
+
+/* shimmer button */
+.btn-shimmer { position: relative; overflow: hidden; }
+.btn-shimmer::before { content:""; position:absolute; inset:0; background: linear-gradient(110deg, transparent 30%, rgba(255,255,255,.45) 50%, transparent 70%); background-size: 200% 100%; animation: shimmer 3.2s linear infinite; pointer-events:none; }
+@keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+
+/* water ripple click */
+.ripple-ring { position: absolute; border-radius: 9999px; border: 2px solid rgba(116,184,22,.7); animation: ripple .8s ease-out forwards; pointer-events: none; }
+@keyframes ripple { 0% { transform: scale(.4); opacity:.9; } 100% { transform: scale(2.6); opacity:0; } }
+
+/* focus */
+:focus-visible { outline: 3px solid #74B816; outline-offset: 3px; border-radius: 6px; }
+
+/* reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .001s !important; transition-duration: .001s !important; }
+  html { scroll-behavior: auto; }
+}
+
+/* scrollbar */
+::-webkit-scrollbar { width: 11px; }
+::-webkit-scrollbar-track { background: #E8F5E9; }
+.dark ::-webkit-scrollbar-track { background: #0F2D24; }
+::-webkit-scrollbar-thumb { background: linear-gradient(#145A32, #74B816); border-radius: 99px; border: 2px solid transparent; background-clip: content-box; }
+
+/* skip link */
+.skip-link { position: absolute; left: -999px; top: 0; z-index: 100; background: #145A32; color: #fff; padding: 12px 20px; border-radius: 0 0 12px 0; }
+.skip-link:focus { left: 0; }
+
+/* masonry */
+.masonry { columns: 1; column-gap: 1.25rem; }
+@media (min-width: 640px) { .masonry { columns: 2; } }
+@media (min-width: 1100px) { .masonry { columns: 3; } }
+.masonry > * { break-inside: avoid; margin-bottom: 1.25rem; }
+
+/* sun rays */
+.sun-rays { background: conic-gradient(from 180deg at 50% 0%, transparent 0deg, rgba(255,244,200,.35) 8deg, transparent 16deg, transparent 30deg, rgba(255,244,200,.25) 38deg, transparent 46deg, transparent 70deg, rgba(255,244,200,.3) 78deg, transparent 86deg, transparent 120deg, rgba(255,244,200,.28) 128deg, transparent 136deg, transparent 200deg, rgba(255,244,200,.3) 210deg, transparent 220deg, transparent 360deg); filter: blur(6px); animation: rayrotate 24s linear infinite; }
+@keyframes rayrotate { 0% { transform: rotate(0deg) scale(1); opacity:.7;} 50% { transform: rotate(4deg) scale(1.05); opacity:1;} 100% { transform: rotate(0deg) scale(1); opacity:.7;} }
+
+.hero-canopy { background: radial-gradient(ellipse 90% 55% at 50% -5%, rgba(20,90,50,.55), transparent 70%), radial-gradient(ellipse 60% 40% at 15% 0%, rgba(46,125,50,.4), transparent 70%), radial-gradient(ellipse 60% 40% at 85% 0%, rgba(116,184,22,.32), transparent 70%); }
+
+.night-sky { background: radial-gradient(ellipse 120% 70% at 50% -10%, #1B4332 0%, #0F2D24 45%, #081C15 100%); }
+
+/* form flower success */
+@keyframes bloom { 0% { transform: scale(0) rotate(-30deg); opacity:0;} 60% { transform: scale(1.2) rotate(8deg); opacity:1;} 100% { transform: scale(1) rotate(0);} }
+.bloom { animation: bloom .8s cubic-bezier(.34,1.56,.64,1) both; }
+@keyframes leafshake { 0%,100%{transform:rotate(0)} 25%{transform:rotate(-4deg)} 75%{transform:rotate(4deg)} }
+.leaf-shake { animation: leafshake .4s ease 2; }
