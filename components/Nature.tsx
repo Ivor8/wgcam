@@ -66,7 +66,7 @@ export function Preloader() {
 
   if (gone) return null;
   return (
-    <div id="wgc-loader" className={`fixed inset-0 z-[100] flex flex-col items-center justify-center bg-naturewhite dark:bg-forestblack transition-opacity duration-700 ${fading ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
+    <div id="wgc-loader" className={`fixed inset-0 z-[100] flex flex-col items-center justify-center px-6 text-center bg-naturewhite dark:bg-forestblack transition-opacity duration-700 ${fading ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
       <div className="relative flex h-40 w-40 items-end justify-center">
         <svg viewBox="0 0 120 120" className="h-40 w-40">
           <ellipse cx="60" cy="104" rx="34" ry="8" fill="#5D4037" opacity=".25" />
@@ -80,8 +80,8 @@ export function Preloader() {
           <circle cx="60" cy="106" r="6" fill="#5D4037"><animate attributeName="r" from="9" to="5" dur="1s" fill="freeze" /></circle>
         </svg>
       </div>
-      <p className="mt-4 font-serif text-2xl text-forest dark:text-leafaccent">Women for a Greener Cameroon</p>
-      <p className="text-xs uppercase tracking-[0.3em] text-forest/60 dark:text-white/50">Restoring Nature · Empowering Communities</p>
+      <p className="mt-4 max-w-xs font-serif text-2xl leading-snug text-balance text-forest dark:text-leafaccent sm:max-w-none sm:text-3xl">Women for a Greener Cameroon</p>
+      <p className="mt-2 max-w-xs text-[11px] font-bold uppercase tracking-[0.3em] text-forest/60 dark:text-white/50 sm:max-w-none">Restoring Nature · Empowering Communities</p>
     </div>
   );
 }
