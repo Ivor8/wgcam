@@ -22,11 +22,7 @@ export default function Footer() {
             <p className="font-serif text-xl font-bold">Women for a Greener Cameroon</p>
           </div>
           <p className="mt-3 text-sm text-white/75">{fr ? 'Restaurer la nature. Autonomiser les communautés. Agroforesterie, éducation des agriculteurs, leadership éco des jeunes et restauration.' : 'Restoring nature, empowering communities. Agroforestry, farmer education, youth eco-leadership and restoration across Cameroon.'}</p>
-          <div className="mt-4 flex gap-2" aria-label="Social links">
-            {['𝕏', 'f', 'in', '◉', '▶'].map((s, i) => (
-              <a key={i} href="#" aria-label={`Social link ${i + 1}`} className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 font-bold transition hover:scale-110 hover:bg-fresh hover:text-forestblack">{s}</a>
-            ))}
-          </div>
+          <p className="mt-4 text-sm font-bold">☎️ <a href="tel:+237652595666" className="underline hover:text-fresh">+237 6 52 59 56 66</a></p>
         </div>
         <nav aria-label="Footer quick links">
           <p className="text-xs font-extrabold uppercase tracking-[0.25em] text-leafaccent">{fr ? 'Liens rapides' : 'Quick links'}</p>
@@ -39,10 +35,9 @@ export default function Footer() {
         <div>
           <p className="text-xs font-extrabold uppercase tracking-[0.25em] text-leafaccent">{fr ? 'Contact' : 'Contact'}</p>
           <ul className="mt-3 space-y-2 text-sm text-white/80">
-            <li>📍 Yaoundé, Cameroon — Nkolbisson · Minkoa-Meyos</li>
-            <li>✉️ hello@wgc-cameroon.org</li>
-            <li>☎️ +237 6 XX XX XX XX</li>
-            <li>💬 WhatsApp {fr ? 'disponible' : 'available'}</li>
+            <li>📍 Nkolbisson · Minkoa-Meyos · Cameroon</li>
+            <li>☎️ <a href="tel:+237652595666" className="underline hover:text-fresh">+237 6 52 59 56 66</a></li>
+            <li><Link href="/contact" className="underline hover:text-fresh">{fr ? 'Page contact →' : 'Contact page →'}</Link></li>
           </ul>
           <form className="mt-4" onSubmit={(e) => { e.preventDefault(); const f = e.currentTarget; f.innerHTML = `<p class='bloom rounded-2xl bg-fresh/20 p-3 text-sm font-bold text-fresh'>🌸 ${fr ? 'Merci ! Bienvenue dans la forêt.' : 'Thank you! Welcome to the forest.'}</p>`; }}>
             <label htmlFor="nl" className="text-xs font-bold uppercase tracking-widest text-white/60">{fr ? 'Infolettre' : 'Newsletter'}</label>
@@ -66,8 +61,8 @@ export default function Footer() {
           <a href="#top" className="mt-6 inline-flex items-center gap-2 rounded-full border border-fresh/50 px-4 py-2 text-sm font-bold text-fresh hover:bg-fresh hover:text-forestblack">🌳 {fr ? 'Retour au sommet' : 'Back to top — grows a tree'}</a>
         </div>
       </div>
-      <div className="border-t border-white/10 py-5 text-center text-xs text-white/60">© 2026 Women for a Greener Cameroon (WGC) · {fr ? 'Organisation environnementale dirigée par des jeunes — Cameroun' : 'Youth-led environmental NGO — Cameroon'} · Nkolbisson · Minkoa-Meyos</div>
-      <a href="https://wa.me/237600000000" aria-label="WhatsApp chat" className="fixed bottom-5 right-5 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-2xl shadow-glow-lg transition hover:scale-110">💬</a>
+      <div className="border-t border-white/10 py-5 text-center text-xs text-white/60">© Women for a Greener Cameroon (WGC) · {fr ? 'Initiative environnementale dirigée par des jeunes — Cameroun' : 'Youth-led environmental initiative — Cameroon'} · Nkolbisson · Minkoa-Meyos · ☎️ +237 6 52 59 56 66</div>
+      <a href="https://wa.me/237652595666" aria-label="WhatsApp WGC" className="fixed bottom-5 right-5 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-2xl shadow-glow-lg transition hover:scale-110">💬</a>
     </footer>
   );
 }

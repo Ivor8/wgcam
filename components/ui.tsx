@@ -74,9 +74,17 @@ export function Counter({ to, suffix = '', label, sub }: { to: number; suffix?: 
   const [n, setN] = useState(0);
   const [ref, setRef] = useState<HTMLDivElement | null>(null);
   useEffect(() => {
-    if (!ref) return;
-    const io = new IntersectionObserver(([e]) => {
-      if (!e.isIntersecting) return;
+    // Fail-safe: never leave the counter stuck at 0 (e.g. observer never fires)
+    const failsafe = setTimeout(() => setN(to), 3000);
+    if (!ref) return () => clearTimeout(failsafe);
+    if (typeof IntersectionObserver === 'undefined') {
+      setN(to);
+      return () => clearTimeout(failsafe);
+    }
+    let done = false;
+    const run = () => {
+      if (done) return; done = true;
+      clearTimeout(failsafe);
       const start = performance.now(); const dur = 1800;
       const tick = (t: number) => {
         const p = Math.min(1, (t - start) / dur);
@@ -85,10 +93,14 @@ export function Counter({ to, suffix = '', label, sub }: { to: number; suffix?: 
         if (p < 1) requestAnimationFrame(tick);
       };
       requestAnimationFrame(tick);
+    };
+    const io = new IntersectionObserver(([e]) => {
+      if (!e.isIntersecting) return;
+      run();
       io.disconnect();
-    }, { threshold: 0.4 });
+    }, { threshold: 0.1 });
     io.observe(ref);
-    return () => io.disconnect();
+    return () => { io.disconnect(); clearTimeout(failsafe); };
   }, [ref, to]);
   return (
     <div ref={setRef} className="group relative rounded-[28px_80px_28px_80px] border border-forest/15 bg-white/80 p-6 text-center shadow-glow backdrop-blur transition-transform duration-500 hover:-translate-y-2 dark:border-white/10 dark:bg-carddark/80 dark:shadow-night">

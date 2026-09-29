@@ -1,12 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Static HTML/CSS/JS export — deployable on any host without Node.js.
+  // Build with `npm run build`, then upload the contents of `out/` to public_html.
+  output: 'export',
   reactStrictMode: true,
-  images: {
-    remotePatterns: [{ protocol: 'https', hostname: 'images.unsplash.com' }],
-    formats: ['image/avif', 'image/webp'],
-  },
-  async headers() {
-    return [{ source: '/(.*)', headers: [{ key: 'X-Content-Type-Options', value: 'nosniff' }] }];
-  },
+  images: { unoptimized: true },
 };
 export default nextConfig;

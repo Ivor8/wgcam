@@ -9,15 +9,15 @@ export default function GetInvolved() {
   const [done, setDone] = useState(false);
   const tabs = fr ? [['volunteer', '🤝 Bénévole'], ['partner', '🌍 Partenaire'], ['donate', '💚 Don'], ['community', '🌱 Communauté']] : [['volunteer', '🤝 Volunteer'], ['partner', '🌍 Partner'], ['donate', '💚 Donate'], ['community', '🌱 Community']];
   const copy: Record<string, string> = fr ? {
-    volunteer: 'Rejoignez plantations, ateliers filles, sensibilisation. Aucune expérience requise — juste du cœur.',
-    partner: 'ONG, entreprises, gouvernement, recherche : co-créons des projets agroforestiers mesurables.',
-    donate: 'Chaque don plante : arbres, ateliers, Farm App. Transparence totale sur l’usage des fonds.',
-    community: 'Inscrivez votre village : diagnostic, démo arbres-cultures, suivi avec nos équipes.',
+    volunteer: 'Rejoignez plantations d’arbres, ateliers pour les filles et sensibilisation.',
+    partner: 'ONG, organisations climatiques, partenaires gouvernementaux, chercheurs : écrivez à WGC via le formulaire.',
+    donate: 'Les dons soutiennent arbres, ateliers pour les filles, sensibilisation et Farm App. Les modalités seront précisées par l’équipe.',
+    community: 'Parlez-nous de votre communauté : sensibilisation, éducation à l’agroforesterie, démonstrations arbres-cultures.',
   } : {
-    volunteer: 'Join plantings, girls’ workshops, outreach. No experience needed — just heart.',
-    partner: 'NGOs, business, government, research: let’s co-create measurable agroforestry projects.',
-    donate: 'Every gift plants: trees, workshops, Farm App. Full transparency on fund use.',
-    community: 'Register your village: diagnosis, tree-crop demo, follow-up with our teams.',
+    volunteer: 'Join tree-planting, girls’ workshops and outreach.',
+    partner: 'NGOs, climate organisations, government partners and researchers: work with WGC via the form.',
+    donate: 'Gifts support trees, girls’ workshops, farmer outreach and the Farm App. Arrangements will be confirmed by the team.',
+    community: 'Tell us about your community: outreach, agroforestry education, tree-crop demonstrations.',
   };
   return (
     <div className="pt-28"><div className="mx-auto max-w-6xl px-5">
@@ -27,8 +27,8 @@ export default function GetInvolved() {
       </div></Reveal>
       <div className="mt-6 grid gap-6 lg:grid-cols-2">
         <Reveal><div className="h-full rounded-[32px] bg-gradient-to-br from-forest via-leaf to-fresh p-8 text-white"><p className="text-5xl">{tabs.find((t) => t[0] === tab)?.[1].split(' ')[0]}</p><h2 className="mt-2 font-serif text-3xl font-bold">{tabs.find((t) => t[0] === tab)?.[1].slice(2)}</h2><p className="mt-3 text-white/90">{copy[tab]}</p>
-          {tab === 'donate' && <div className="mt-5 flex flex-wrap gap-2">{['5 000', '10 000', '25 000', '50 000 FCFA'].map((a) => (<span key={a} className="rounded-full bg-white/20 px-4 py-2 text-sm font-bold">🌱 {a}</span>))}</div>}
-          <ul className="mt-5 space-y-2 text-sm text-white/85"><li>🌿 {fr ? 'Reçu et suivi transparent' : 'Receipt and transparent follow-up'}</li><li>📍 Nkolbisson · Minkoa-Meyos · Cameroun</li><li>💬 WhatsApp {fr ? 'disponible' : 'available'}</li></ul>
+          {tab === 'donate' && <div className="mt-5 rounded-2xl bg-white/15 p-4 text-sm text-white/90">{fr ? 'Dons : arbres, ateliers pour les filles, sensibilisation des agriculteurs, Farm App. Les modalités seront précisées par l’équipe.' : 'Gifts: trees, girls’ workshops, farmer outreach, Farm App. Arrangements will be confirmed by the team.'}</div>}
+          <ul className="mt-5 space-y-2 text-sm text-white/85"><li>🌿 {fr ? 'Activités : plantations, ateliers, sensibilisation' : 'Activities: plantings, workshops, outreach'}</li><li>📍 Nkolbisson · Minkoa-Meyos · Cameroun</li></ul>
         </div></Reveal>
         <Reveal delay={0.1}><div className="rounded-[32px] border border-forest/15 bg-white p-7 dark:border-white/10 dark:bg-carddark">
           {done ? (<div className="bloom p-6 text-center" role="status"><div className="text-6xl">🌸</div><p className="mt-2 font-serif text-2xl font-bold text-forest dark:text-leafaccent">{fr ? 'Bienvenue dans la forêt !' : 'Welcome to the forest!'}</p></div>)
@@ -43,7 +43,7 @@ export default function GetInvolved() {
           </form>)}
         </div></Reveal>
       </div>
-      <Reveal><div className="mt-8 rounded-[32px] border border-forest/15 bg-sand p-7 text-center dark:border-white/10 dark:bg-white/5"><p className="font-serif text-2xl font-bold text-forest dark:text-white">✉️ {fr ? 'Infolettre de la forêt — une fois par mois, zéro spam.' : 'Forest newsletter — once a month, zero spam.'}</p><form className="mx-auto mt-4 flex max-w-md overflow-hidden rounded-full bg-white p-1.5 shadow dark:bg-carddark" onSubmit={(e) => { e.preventDefault(); (e.currentTarget as HTMLFormElement).innerHTML = `<p class='w-full p-2 text-sm font-bold'>🌸 ${fr ? 'Merci !' : 'Thank you!'}</p>`; }}><input required type="email" placeholder="you@email.com" aria-label="Email" className="w-full bg-transparent px-4 text-sm focus:outline-none" /><button className="rounded-full bg-forest px-6 py-2.5 text-sm font-bold text-white">🌱 OK</button></form></div></Reveal>
+      <Reveal><div className="mt-8 rounded-[32px] border border-forest/15 bg-sand p-7 text-center dark:border-white/10 dark:bg-white/5"><p className="font-serif text-2xl font-bold text-forest dark:text-white">✉️ {fr ? 'Infolettre — laissez votre email.' : 'Newsletter — leave your email.'}</p><form className="mx-auto mt-4 flex max-w-md overflow-hidden rounded-full bg-white p-1.5 shadow dark:bg-carddark" onSubmit={(e) => { e.preventDefault(); (e.currentTarget as HTMLFormElement).innerHTML = `<p class='w-full p-2 text-sm font-bold'>🌸 ${fr ? 'Merci !' : 'Thank you!'}</p>`; }}><input required type="email" placeholder="you@email.com" aria-label="Email" className="w-full bg-transparent px-4 text-sm focus:outline-none" /><button className="rounded-full bg-forest px-6 py-2.5 text-sm font-bold text-white">🌱 OK</button></form></div></Reveal>
     </div><div className="h-16" /></div>
   );
 }

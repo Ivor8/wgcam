@@ -7,19 +7,19 @@ export default function News() {
   const { lang } = useLang(); const fr = lang === 'fr';
   const [q, setQ] = useState(''); const [cat, setCat] = useState('All');
   const posts = fr ? [
-    { c: 'Restauration', t: '20+ arbres à Nkolbisson et Minkoa-Meyos', d: 'Premières plantations en zones dégradées avec les communautés.', img: 'https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?q=80&w=900&auto=format&fit=crop' },
-    { c: 'Jeunesse', t: '13 filles deviennent éco-leaders', d: 'Deux ateliers : environnement, durabilité, confiance.', img: 'https://images.unsplash.com/photo-1497486751825-1233686d5d80?q=80&w=900&auto=format&fit=crop' },
-    { c: 'Agriculteurs', t: '18–23 agriculteurs sensibilisés', d: 'Trois outreaches : arbres-cultures et sols vivants.', img: 'https://images.unsplash.com/photo-1592982537447-7440770cbfc9?q=80&w=900&auto=format&fit=crop' },
-    { c: 'Technologie', t: 'Prototype WGC Farm App testé', d: 'Présenté aux agriculteurs : leurs retours dessinent l’app.', img: 'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?q=80&w=900&auto=format&fit=crop' },
-    { c: 'Événement', t: 'Journée plantation communautaire', d: 'Rejoignez la prochaine vague de semis — tout le monde est bienvenu.', img: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=900&auto=format&fit=crop' },
-    { c: 'Agroforesterie', t: 'Arbres + cultures : la démo qui convainc', d: 'Voir pour croire : ombre, sols frais, revenus diversifiés.', img: 'https://images.unsplash.com/photo-1500937386664-56d1dfef3854?q=80&w=900&auto=format&fit=crop' },
+    { c: 'Restauration', t: '20+ arbres à Nkolbisson et Minkoa-Meyos', d: 'Premières plantations en zones dégradées avec les communautés.', img: '/images/programs/restoration.jpg' },
+    { c: 'Jeunesse', t: '13 filles deviennent éco-leaders', d: 'Deux ateliers : environnement, durabilité, confiance.', img: '/images/programs/youth.jpg' },
+    { c: 'Agriculteurs', t: '18–23 agriculteurs sensibilisés', d: 'Trois outreaches : arbres-cultures et sols vivants.', img: '/images/programs/farmer-education.jpg' },
+    { c: 'Technologie', t: 'Prototype WGC Farm App testé', d: 'Présenté aux agriculteurs : leurs retours dessinent l’app.', img: '/images/gallery/g13.jpg' },
+    { c: 'Écoute', t: 'Sessions de retours avec les agriculteurs', d: 'Les agriculteurs partagent leurs retours sur des solutions durables adaptées à leurs exploitations.', img: '/images/gallery/g14.jpg' },
+    { c: 'Agroforesterie', t: 'Arbres + cultures : la démo qui convainc', d: 'Voir pour croire : ombre, sols frais, revenus diversifiés.', img: '/images/programs/agroforestry.jpg' },
   ] : [
-    { c: 'Restoration', t: '20+ trees in Nkolbisson & Minkoa-Meyos', d: 'First plantings on degraded land with communities.', img: 'https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?q=80&w=900&auto=format&fit=crop' },
-    { c: 'Youth', t: '13 girls become eco-leaders', d: 'Two workshops: environment, sustainability, confidence.', img: 'https://images.unsplash.com/photo-1497486751825-1233686d5d80?q=80&w=900&auto=format&fit=crop' },
-    { c: 'Farmers', t: '18–23 farmers engaged', d: 'Three outreaches: tree-crops and living soils.', img: 'https://images.unsplash.com/photo-1592982537447-7440770cbfc9?q=80&w=900&auto=format&fit=crop' },
-    { c: 'Technology', t: 'WGC Farm App prototype tested', d: 'Shown to farmers: their feedback shapes the app.', img: 'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?q=80&w=900&auto=format&fit=crop' },
-    { c: 'Event', t: 'Community planting day', d: 'Join the next sowing wave — everyone welcome.', img: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=900&auto=format&fit=crop' },
-    { c: 'Agroforestry', t: 'Trees + crops: the demo that convinces', d: 'Seeing is believing: shade, cool soils, diverse income.', img: 'https://images.unsplash.com/photo-1500937386664-56d1dfef3854?q=80&w=900&auto=format&fit=crop' },
+    { c: 'Restoration', t: '20+ trees in Nkolbisson & Minkoa-Meyos', d: 'First plantings on degraded land with communities.', img: '/images/programs/restoration.jpg' },
+    { c: 'Youth', t: '13 girls become eco-leaders', d: 'Two workshops: environment, sustainability, confidence.', img: '/images/programs/youth.jpg' },
+    { c: 'Farmers', t: '18–23 farmers engaged', d: 'Three outreaches: tree-crops and living soils.', img: '/images/programs/farmer-education.jpg' },
+    { c: 'Technology', t: 'WGC Farm App prototype tested', d: 'Shown to farmers: their feedback shapes the app.', img: '/images/gallery/g13.jpg' },
+    { c: 'Listening', t: 'Feedback sessions with farmers', d: 'Farmers share feedback on sustainable solutions suited to their farms.', img: '/images/gallery/g14.jpg' },
+    { c: 'Agroforestry', t: 'Trees + crops: the demo that convinces', d: 'Seeing is believing: shade, cool soils, diverse income.', img: '/images/programs/agroforestry.jpg' },
   ];
   const cats = ['All', ...Array.from(new Set(posts.map((p) => p.c)))];
   const list = posts.filter((p) => (cat === 'All' || p.c === cat) && (p.t + p.d).toLowerCase().includes(q.toLowerCase()));

@@ -22,7 +22,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     alternateName: 'WGC',
     slogan: 'Restoring Nature. Empowering Communities.',
     areaServed: 'Cameroon',
-    foundingDate: '2025-11',
     knowsAbout: ['Agroforestry', 'Environmental Restoration', 'Women Farmers', 'Youth Leadership'],
   };
   return (
