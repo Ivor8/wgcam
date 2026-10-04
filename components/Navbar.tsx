@@ -32,7 +32,8 @@ export default function Navbar() {
           <Link href="/" className="flex items-center gap-2.5" aria-label="WGC home">
             <img src="/logo.jpg" alt="WGC logo" className="h-10 w-10 rounded-full object-cover ring-2 ring-fresh/60" width={40} height={40} />
             <span className="leading-tight">
-              <span className="block font-serif text-base font-bold text-forest dark:text-white sm:text-lg">Women for a Greener Cameroon</span>
+              <span className="block font-serif text-lg font-bold text-forest dark:text-white sm:hidden">WGCam</span>
+              <span className="hidden font-serif text-base font-bold text-forest dark:text-white sm:block sm:text-lg">Women for a Greener Cameroon</span>
               <span className="hidden text-[10px] font-bold uppercase tracking-[0.22em] text-leaf sm:block">Restoring Nature · Empowering Communities</span>
             </span>
           </Link>

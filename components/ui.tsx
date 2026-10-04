@@ -1,8 +1,9 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
 
-/* Gentle, once-only reveal. Visible by default (SSR / no-JS safe).
-   Only hides after mount until revealed, with unconditional failsafe. */
+/* Gentle, once-only reveal. Strictly scroll-driven: content below the fold
+   stays hidden until it actually enters the viewport. No timers that
+   reveal everything on page load. */
 export function Reveal({ children, delay = 0, className = '' }: { children: React.ReactNode; delay?: number; className?: string }) {
   const ref = useRef<HTMLDivElement>(null);
   const [mounted, setMounted] = useState(false);
@@ -11,7 +12,6 @@ export function Reveal({ children, delay = 0, className = '' }: { children: Reac
   useEffect(() => {
     setMounted(true);
     const el = ref.current;
-    // If anything is off (no element, reduced motion, no observer) — show immediately
     if (!el) {
       setVisible(true);
       return;
@@ -26,22 +26,54 @@ export function Reveal({ children, delay = 0, className = '' }: { children: Reac
       setVisible(true);
       return;
     }
-    // Unconditional failsafe: never leave content hidden
-    const failsafe = window.setTimeout(() => setVisible(true), 1800 + delay * 1000);
+
+    let done = false;
+    let t: number | undefined;
+    const show = () => {
+      if (done) return;
+      done = true;
+      t = window.setTimeout(() => setVisible(true), delay * 1000);
+    };
+    const inView = () => {
+      const r = el.getBoundingClientRect();
+      return r.top < window.innerHeight * 0.92 && r.bottom > 0;
+    };
+
+    // Already on screen (e.g. top sections on load) → animate in now.
+    // Below the fold → wait until scrolled into view.
+    if (inView()) show();
+
     const io = new IntersectionObserver(
       ([e]) => {
         if (e.isIntersecting) {
-          window.setTimeout(() => setVisible(true), delay * 1000);
+          show();
           io.disconnect();
-          window.clearTimeout(failsafe);
         }
       },
       { threshold: 0.05, rootMargin: '0px 0px -30px 0px' }
     );
     io.observe(el);
+
+    // Scroll fallback (in case the observer ever misses): still only
+    // reveals when the element is actually in view — never on a timer.
+    let ticking = false;
+    const onScroll = () => {
+      if (done || ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        ticking = false;
+        if (inView()) {
+          show();
+          io.disconnect();
+        }
+      });
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+
     return () => {
       io.disconnect();
-      window.clearTimeout(failsafe);
+      window.removeEventListener('scroll', onScroll);
+      if (t) window.clearTimeout(t);
     };
   }, [delay]);
 
