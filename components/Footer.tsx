@@ -1,68 +1,122 @@
 'use client';
 import Link from 'next/link';
+import { FiMapPin, FiPhone, FiMessageCircle } from 'react-icons/fi';
 import { useLang } from './Providers';
 
 export default function Footer() {
   const { lang, setLang } = useLang();
   const fr = lang === 'fr';
+
   return (
-    <footer className="relative mt-20 overflow-hidden bg-gradient-to-b from-forest via-[#0d3d22] to-forestblack text-white" aria-label="Footer">
-      <svg viewBox="0 0 1440 90" className="block w-full text-naturewhite dark:text-forestblack" aria-hidden preserveAspectRatio="none" style={{ height: 60 }}>
-        <path d="M0 90 L0 55 C 240 10, 420 85, 720 40 S 1180 5, 1440 55 L1440 90 Z" fill="currentColor" opacity="0" />
-        <path d="M0 0 L0 0 M0 90 L0 55 C 240 10, 420 85, 720 40 S 1180 5, 1440 55 L1440 90 Z" fill="#F9FFF9" className="dark:fill-[#081C15]" />
-      </svg>
-      {/* roots */}
-      <svg viewBox="0 0 1440 70" className="mx-auto w-full max-w-6xl opacity-40" aria-hidden>
-        <path d="M720 0 C 700 25, 640 30, 600 55 M720 0 C 740 25, 800 30, 840 55 M720 0 C 720 28, 720 40, 720 62 M720 0 C 680 22, 560 28, 480 50 M720 0 C 760 22, 880 28, 960 50" stroke="#74B816" strokeWidth="2.5" fill="none" strokeLinecap="round" />
-      </svg>
-      <div className="mx-auto grid max-w-7xl gap-10 px-5 pb-10 pt-4 sm:grid-cols-2 lg:grid-cols-4">
+    <footer className="mt-24 border-t border-forest/10 bg-white dark:border-white/10 dark:bg-jungle" aria-label="Footer">
+      <div className="mx-auto grid max-w-7xl gap-12 px-5 py-14 md:grid-cols-2 lg:grid-cols-4">
         <div>
           <div className="flex items-center gap-3">
-            <img src="/logo.jpg" alt="WGC logo" className="h-12 w-12 rounded-full object-cover ring-2 ring-fresh" />
-            <p className="font-serif text-xl font-bold">Women for a Greener Cameroon</p>
+            <img src="/logo.jpg" alt="WGC logo" className="h-11 w-11 rounded-full object-cover" />
+            <p className="font-serif text-lg font-semibold leading-snug text-forest dark:text-white">
+              Women for a<br />Greener Cameroon
+            </p>
           </div>
-          <p className="mt-3 text-sm text-white/75">{fr ? 'Restaurer la nature. Autonomiser les communautés. Agroforesterie, éducation des agriculteurs, leadership éco des jeunes et restauration.' : 'Restoring nature, empowering communities. Agroforestry, farmer education, youth eco-leadership and restoration across Cameroon.'}</p>
-          <p className="mt-4 text-sm font-bold">☎️ <a href="tel:+237652595666" className="underline hover:text-fresh">+237 6 52 59 56 66</a></p>
+          <p className="mt-4 max-w-xs text-[15px] leading-relaxed text-foresttext/65 dark:text-white/65">
+            {fr
+              ? 'Une initiative environnementale dirigée par des jeunes qui travaille avec les communautés pour restaurer la nature et soutenir les agriculteurs au Cameroun.'
+              : 'A youth-led environmental initiative working with communities to restore nature and support farmers in Cameroon.'}
+          </p>
         </div>
-        <nav aria-label="Footer quick links">
-          <p className="text-xs font-extrabold uppercase tracking-[0.25em] text-leafaccent">{fr ? 'Liens rapides' : 'Quick links'}</p>
-          <ul className="mt-3 space-y-2 text-sm">
-            {[['/about', fr ? 'À propos' : 'About'], ['/programmes', 'Programmes'], ['/impact', 'Impact'], ['/team', fr ? 'Équipe' : 'Team'], ['/gallery', fr ? 'Galerie' : 'Gallery'], ['/news', fr ? 'Actualités' : 'News'], ['/sdgs', fr ? 'ODD' : 'SDGs'], ['/faq', 'FAQ']].map(([h, l]) => (
-              <li key={h}><Link href={h} className="text-white/80 hover:text-fresh hover:underline">{l}</Link></li>
+
+        <nav aria-label="Footer">
+          <p className="text-xs font-bold uppercase tracking-[0.14em] text-forest/60 dark:text-white/50">
+            {fr ? 'Naviguer' : 'Explore'}
+          </p>
+          <ul className="mt-4 space-y-2.5 text-[15px]">
+            {[
+              ['/', fr ? 'Accueil' : 'Home'],
+              ['/about', fr ? 'À propos' : 'About'],
+              ['/programmes', 'Programmes'],
+              ['/impact', 'Impact'],
+              ['/team', fr ? 'Équipe' : 'Team'],
+              ['/gallery', fr ? 'Galerie' : 'Gallery'],
+              ['/news', fr ? 'Actualités' : 'News'],
+              ['/faq', 'FAQ'],
+            ].map(([h, l]) => (
+              <li key={h}>
+                <Link href={h} className="text-foresttext/75 hover:text-forest hover:underline dark:text-white/70 dark:hover:text-white">
+                  {l}
+                </Link>
+              </li>
             ))}
           </ul>
         </nav>
+
         <div>
-          <p className="text-xs font-extrabold uppercase tracking-[0.25em] text-leafaccent">{fr ? 'Contact' : 'Contact'}</p>
-          <ul className="mt-3 space-y-2 text-sm text-white/80">
-            <li>📍 Nkolbisson · Minkoa-Meyos · Cameroon</li>
-            <li>☎️ <a href="tel:+237652595666" className="underline hover:text-fresh">+237 6 52 59 56 66</a></li>
-            <li><Link href="/contact" className="underline hover:text-fresh">{fr ? 'Page contact →' : 'Contact page →'}</Link></li>
+          <p className="text-xs font-bold uppercase tracking-[0.14em] text-forest/60 dark:text-white/50">Contact</p>
+          <ul className="mt-4 space-y-3 text-[15px] text-foresttext/75 dark:text-white/70">
+            <li className="flex items-start gap-2">
+              <FiMapPin className="mt-1 shrink-0" size={16} />
+              <span>Nkolbisson · Minkoa-Meyos · Cameroon</span>
+            </li>
+            <li>
+              <a href="tel:+237652595666" className="flex items-center gap-2 hover:underline">
+                <FiPhone size={16} /> +237 6 52 59 56 66
+              </a>
+            </li>
+            <li>
+              <a href="https://wa.me/237652595666" className="flex items-center gap-2 hover:underline">
+                <FiMessageCircle size={16} /> WhatsApp
+              </a>
+            </li>
           </ul>
-          <form className="mt-4" onSubmit={(e) => { e.preventDefault(); const f = e.currentTarget; f.innerHTML = `<p class='bloom rounded-2xl bg-fresh/20 p-3 text-sm font-bold text-fresh'>🌸 ${fr ? 'Merci ! Bienvenue dans la forêt.' : 'Thank you! Welcome to the forest.'}</p>`; }}>
-            <label htmlFor="nl" className="text-xs font-bold uppercase tracking-widest text-white/60">{fr ? 'Infolettre' : 'Newsletter'}</label>
-            <div className="mt-2 flex overflow-hidden rounded-full bg-white/10 p-1 backdrop-blur">
-              <input id="nl" type="email" required placeholder={fr ? 'votre@email.com' : 'you@email.com'} className="w-full bg-transparent px-3 text-sm text-white placeholder:text-white/40 focus:outline-none" />
-              <button className="rounded-full bg-fresh px-4 py-2 text-sm font-bold text-forestblack" aria-label="Subscribe">🌱</button>
+          <form
+            className="mt-5"
+            onSubmit={(e) => {
+              e.preventDefault();
+              const f = e.currentTarget;
+              f.innerHTML = `<p class='rounded-xl bg-sage p-3 text-sm font-medium'>${fr ? 'Merci. Vous êtes bien inscrit(e).' : 'Thank you. You are subscribed.'}</p>`;
+            }}
+          >
+            <label htmlFor="nl" className="text-sm font-medium">
+              {fr ? 'Recevoir nos nouvelles' : 'Get our updates'}
+            </label>
+            <div className="mt-2 flex overflow-hidden rounded-full border border-forest/15 bg-cream p-1 dark:border-white/15 dark:bg-forestblack">
+              <input id="nl" type="email" required placeholder="you@email.com" className="w-full bg-transparent px-4 text-sm focus:outline-none" />
+              <button className="shrink-0 rounded-full bg-forest px-5 py-2.5 text-sm font-semibold text-white" aria-label="Subscribe">
+                OK
+              </button>
             </div>
           </form>
         </div>
+
         <div>
-          <p className="text-xs font-extrabold uppercase tracking-[0.25em] text-leafaccent">{fr ? 'Langue & Thème' : 'Language & Theme'}</p>
-          <div className="mt-3 flex gap-2">
-            <button onClick={() => setLang('en')} className={`rounded-full px-4 py-2 text-sm font-bold ${!fr ? 'bg-fresh text-forestblack' : 'bg-white/10'}`}>EN</button>
-            <button onClick={() => setLang('fr')} className={`rounded-full px-4 py-2 text-sm font-bold ${fr ? 'bg-fresh text-forestblack' : 'bg-white/10'}`}>FR</button>
+          <p className="text-xs font-bold uppercase tracking-[0.14em] text-forest/60 dark:text-white/50">
+            {fr ? 'Langue' : 'Language'}
+          </p>
+          <div className="mt-4 flex gap-2">
+            <button
+              onClick={() => setLang('en')}
+              className={`rounded-full px-5 py-2 text-sm font-semibold ${!fr ? 'bg-forest text-white' : 'border border-forest/20 dark:border-white/20'}`}
+            >
+              EN
+            </button>
+            <button
+              onClick={() => setLang('fr')}
+              className={`rounded-full px-5 py-2 text-sm font-semibold ${fr ? 'bg-forest text-white' : 'border border-forest/20 dark:border-white/20'}`}
+            >
+              FR
+            </button>
           </div>
-          <div className="mt-4 flex gap-2 text-xs">
-            <span className="rounded-full bg-white/10 px-3 py-1.5">🌱 SDG 2</span>
-            <span className="rounded-full bg-white/10 px-3 py-1.5">🌍 SDG 13</span>
-            <span className="rounded-full bg-white/10 px-3 py-1.5">🌳 SDG 15</span>
-          </div>
-          <a href="#top" className="mt-6 inline-flex items-center gap-2 rounded-full border border-fresh/50 px-4 py-2 text-sm font-bold text-fresh hover:bg-fresh hover:text-forestblack">🌳 {fr ? 'Retour au sommet' : 'Back to top — grows a tree'}</a>
+          <p className="mt-6 text-sm text-foresttext/60 dark:text-white/55">SDG 2 · SDG 13 · SDG 15</p>
         </div>
       </div>
-      <div className="border-t border-white/10 py-5 text-center text-xs text-white/60">© Women for a Greener Cameroon (WGC) · {fr ? 'Initiative environnementale dirigée par des jeunes — Cameroun' : 'Youth-led environmental initiative — Cameroon'} · Nkolbisson · Minkoa-Meyos · ☎️ +237 6 52 59 56 66</div>
-      <a href="https://wa.me/237652595666" aria-label="WhatsApp WGC" className="fixed bottom-5 right-5 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-2xl shadow-glow-lg transition hover:scale-110">💬</a>
+      <div className="border-t border-forest/10 py-6 text-center text-sm text-foresttext/55 dark:border-white/10 dark:text-white/50">
+        © Women for a Greener Cameroon (WGC) · Nkolbisson · Minkoa-Meyos
+      </div>
+      <a
+        href="https://wa.me/237652595666"
+        aria-label="Chat on WhatsApp"
+        className="fixed bottom-5 right-5 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-forest text-white shadow-card transition hover:scale-105"
+      >
+        <FiMessageCircle size={20} />
+      </a>
     </footer>
   );
 }

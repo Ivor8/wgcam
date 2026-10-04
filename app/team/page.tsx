@@ -1,46 +1,64 @@
 'use client';
+import Link from 'next/link';
+import { FiArrowRight } from 'react-icons/fi';
 import { useLang } from '../../components/Providers';
-import { Reveal, SectionHeading } from '../../components/ui';
+import { Eyebrow, Reveal } from '../../components/ui';
 
 const team = [
-  { n: 'Kristy-Marc Mafue Melo', rEn: 'Co-founder & President', rFr: 'Cofondatrice & Présidente', dEn: 'Leads overall direction and day-to-day running of WGC, including coordination and financial management across environmental, agricultural and community programmes.', dFr: 'Porte la direction générale et le quotidien de WGC : coordination et gestion financière des programmes environnementaux, agricoles et communautaires.', g: 'Leadership', e: '🌺', img: '/images/team/kristy.jpg' },
-  { n: 'Cynthia Alanyuy Wrinkar', rEn: 'Co-founder & Project Lead', rFr: 'Cofondatrice & Cheffe de projets', dEn: 'Leads project development and implementation while supporting outreach, partnerships and programmes for sustainable agriculture and community empowerment.', dFr: 'Porte le développement et la mise en œuvre des projets : sensibilisation, partenariats et agriculture durable au service des communautés.', g: 'Leadership', e: '🌿', img: '/images/team/cynthia.jpg' },
-  { n: 'Taidouhim Djoda Misa Laure', rEn: 'Chief Operations Officer', rFr: 'Directrice des opérations', dEn: 'Supports operations and project coordination, drawing on experience in project management and organisational implementation.', dFr: 'Appuie les opérations et la coordination des projets, forte d’une expérience en gestion et mise en œuvre organisationnelle.', g: 'Core Team', e: '🌻', img: '/images/team/taidouhim.jpg' },
-  { n: 'Seka Jean Blaise Tarnyuy', rEn: 'Technical Advisor', rFr: 'Conseiller technique', dEn: 'Provides technical guidance drawing on experience in project development, climate justice, clean energy and community initiatives.', dFr: 'Apporte un appui technique : développement de projets, justice climatique, énergie propre et initiatives communautaires.', g: 'Advisors', e: '🌳', img: '/images/team/seka.jpg' },
-  { n: 'Cindy Melo Shimyui', rEn: 'Chief Technology Officer', rFr: 'Directrice technologie', dEn: 'Leads technological development of the WGC Farm App and supports digital tools advancing sustainable agriculture.', dFr: 'Porte le développement de WGC Farm App et l’usage du numérique pour une agriculture durable.', g: 'Core Team', e: '📱', img: '' },
+  { n: 'Kristy-Marc Mafue Melo', rEn: 'Co-founder & President', rFr: 'Cofondatrice & Présidente', dEn: 'Leads the overall direction and day-to-day running of WGC, including organisational coordination and financial management. She works with the team to advance WGC’s environmental, agricultural and community programmes.', dFr: 'Porte la direction générale et le quotidien de WGC, y compris la coordination et la gestion financière. Elle travaille avec l’équipe pour faire avancer les programmes environnementaux, agricoles et communautaires.', img: '/images/team/kristy.jpg' },
+  { n: 'Cynthia Alanyuy Wrinkar', rEn: 'Co-founder & Project Lead', rFr: 'Cofondatrice & Cheffe de projets', dEn: 'Leads project development and implementation while supporting community outreach, partnerships and programmes focused on sustainable agriculture and community empowerment.', dFr: 'Porte le développement et la mise en œuvre des projets, tout en soutenant la sensibilisation, les partenariats et les programmes pour une agriculture durable.', img: '/images/team/cynthia.jpg' },
+  { n: 'Taidouhim Djoda Misa Laure', rEn: 'Chief Operations Officer', rFr: 'Directrice des opérations', dEn: 'Supports WGC’s operations and project coordination, drawing on experience in project management and organisational implementation.', dFr: 'Appuie les opérations et la coordination des projets, forte d’une expérience en gestion de projets et en mise en œuvre.', img: '/images/team/taidouhim.jpg' },
+  { n: 'Seka Jean Blaise Tarnyuy', rEn: 'Technical Advisor', rFr: 'Conseiller technique', dEn: 'Provides technical guidance to WGC, drawing on experience in project development, climate justice, clean energy and community-focused initiatives.', dFr: 'Apporte un appui technique à WGC, fort d’une expérience en développement de projets, justice climatique, énergie propre et initiatives communautaires.', img: '/images/team/seka.jpg' },
+  { n: 'Cindy Melo Shimyui', rEn: 'Chief Technology Officer', rFr: 'Directrice technologie', dEn: 'Leads the technological development of the WGC Farm App and supports WGC’s use of digital tools to advance sustainable agriculture.', dFr: 'Porte le développement technologique de l’application WGC Farm et soutient l’usage des outils numériques pour une agriculture durable.', img: '' },
 ];
 
+function initials(name: string) {
+  return name.split(' ').map((w) => w[0]).slice(0, 2).join('');
+}
+
 export default function Team() {
-  const { lang } = useLang(); const fr = lang === 'fr';
-  const groups = ['Leadership', 'Core Team', 'Advisors'];
+  const { lang } = useLang();
+  const fr = lang === 'fr';
+
   return (
-    <div className="pt-28">
-      <div className="mx-auto max-w-7xl px-5"><SectionHeading kicker={fr ? 'Équipe' : 'Team'} title={fr ? 'Les mains qui plantent' : 'The hands that plant'} lead={fr ? 'Femmes, jeunes et conseillers : une équipe resserrée, enracinée dans les communautés.' : 'Women, youth and advisors: a tight team rooted in communities.'} />
-        {groups.map((g) => (
-          <div key={g} className="mt-10">
-            <h2 className="font-serif text-2xl font-bold text-forest dark:text-leafaccent">🌿 {g === 'Leadership' ? (fr ? 'Direction' : 'Leadership') : g === 'Core Team' ? (fr ? 'Équipe centrale' : 'Core Team') : (fr ? 'Conseillers' : 'Advisors')}</h2>
-            <div className="mt-5 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-              {team.filter((t) => t.g === g).map((t, i) => (
-                <Reveal key={i} delay={(i % 3) * 0.08}>
-                  <article className="group relative h-full overflow-hidden rounded-[30px] border border-forest/15 bg-white p-7 text-center transition hover:-translate-y-2 hover:shadow-glow-lg dark:border-white/10 dark:bg-carddark">
-                    <div className="absolute inset-x-8 top-4 h-24 rounded-full bg-fresh/15 blur-2xl opacity-0 transition group-hover:opacity-100" aria-hidden />
-                    {t.img ? (
-                      <img src={t.img} alt={t.n} loading="lazy" className="relative mx-auto h-28 w-28 rounded-full object-cover ring-4 ring-fresh/40 transition group-hover:ring-fresh" />
-                    ) : (
-                      <div className="relative mx-auto flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-br from-sand to-fog text-5xl ring-4 ring-fresh/40 transition group-hover:ring-fresh dark:from-white/10 dark:to-white/5" aria-hidden>{t.e}</div>
-                    )}
-                    <h3 className="mt-4 font-serif text-2xl font-bold">{t.n}</h3>
-                    <p className="mt-1 text-xs font-extrabold uppercase tracking-[0.2em] text-leaf">{fr ? t.rFr : t.rEn}</p>
-                    <p className="mt-3 text-sm leading-relaxed text-foresttext/70 dark:text-white/65">{fr ? t.dFr : t.dEn}</p>
-                  </article>
-                </Reveal>
-              ))}
-            </div>
-          </div>
-        ))}
-        <Reveal><div className="mt-12 rounded-[32px] bg-gradient-to-r from-forest to-fresh p-8 text-center text-white"><h2 className="font-serif text-3xl font-bold">{fr ? 'Envie de rejoindre les volontaires ?' : 'Want to join the volunteers?'}</h2><a href="/get-involved" className="mt-4 inline-block rounded-full bg-white px-7 py-3 font-bold text-forest">🤝 {fr ? 'Devenir bénévole' : 'Become a volunteer'}</a></div></Reveal>
+    <div className="pt-14 sm:pt-20">
+      <div className="mx-auto max-w-3xl px-5 text-center">
+        <Eyebrow>{fr ? 'Notre équipe' : 'Our team'}</Eyebrow>
+        <h1 className="mt-4 text-4xl font-medium sm:text-5xl">{fr ? 'Les personnes derrière WGC' : 'The people behind WGC'}</h1>
+        <p className="mx-auto mt-6 max-w-2xl text-lg text-foresttext/70 dark:text-white/70">
+          {fr
+            ? 'Une petite équipe resserrée, accompagnée de conseillers, qui travaille chaque jour avec les communautés au Cameroun.'
+            : 'A small, close team, supported by advisors, working every day with communities in Cameroon.'}
+        </p>
       </div>
-      <div className="h-16" />
+
+      <div className="mx-auto mt-14 max-w-5xl space-y-4 px-5">
+        {team.map((t, i) => (
+          <Reveal key={i}>
+            <article className="card-clean grid gap-5 p-6 sm:grid-cols-[96px_1fr] sm:gap-7 sm:p-8">
+              {t.img ? (
+                <img src={t.img} alt={t.n} loading="lazy" className="h-24 w-24 rounded-full object-cover" />
+              ) : (
+                <div aria-hidden className="flex h-24 w-24 items-center justify-center rounded-full bg-sage font-serif text-2xl text-forest dark:bg-white/10 dark:text-white">
+                  {initials(t.n)}
+                </div>
+              )}
+              <div>
+                <h2 className="font-serif text-2xl font-semibold">{t.n}</h2>
+                <p className="mt-1 text-sm font-bold uppercase tracking-[0.12em] text-forest/60 dark:text-white/55">{fr ? t.rFr : t.rEn}</p>
+                <p className="mt-3 max-w-2xl leading-relaxed text-foresttext/70 dark:text-white/65">{fr ? t.dFr : t.dEn}</p>
+              </div>
+            </article>
+          </Reveal>
+        ))}
+      </div>
+
+      <div className="mx-auto max-w-5xl px-5 py-14 text-center">
+        <p className="font-serif text-2xl">{fr ? 'Envie de travailler avec nous ?' : 'Want to work with us?'}</p>
+        <Link href="/get-involved" className="btn-primary mt-5">
+          {fr ? 'Devenir bénévole' : 'Become a volunteer'} <FiArrowRight size={16} />
+        </Link>
+      </div>
     </div>
   );
 }

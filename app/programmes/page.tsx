@@ -1,50 +1,118 @@
 'use client';
+import Link from 'next/link';
+import { FiArrowRight, FiCheck } from 'react-icons/fi';
 import { useLang } from '../../components/Providers';
-import { Reveal, SectionHeading } from '../../components/ui';
+import { Eyebrow, Reveal } from '../../components/ui';
 
 export default function Programmes() {
-  const { lang } = useLang(); const fr = lang === 'fr';
-  const items = fr ? [
-    { i: '🌾', h: 'Agroforesterie — arbres + cultures', d: 'Planter et entretenir des arbres avec les cultures de rente au lieu de tout défricher. Comprendre l’importance des arbres, tester des combinaisons arbres-cultures qui soutiennent production et restauration.', img: '/images/programs/agroforestry.jpg', points: ['Démos arbres-cultures', 'Arbres adaptés au terroir', 'Sols protégés, ombre utile'] },
-    { i: '👩🏾‍🌾', h: 'Éducation des agriculteurs', d: 'Les femmes = 60 %+ de la main-d’œuvre agricole. Sensibilisation communautaire, discussions, éducation environnementale, sessions de retours sur des solutions durables.', img: '/images/programs/farmer-education.jpg', points: ['Sensibilisation villageoise', 'Éducation agroforestière', 'Co-création de solutions'] },
-    { i: '💚', h: 'Éco-leadership des jeunes', d: 'Former les filles à devenir éco-leaders : comprendre les défis, gagner confiance, agir dans leurs communautés. 13 filles déjà formées en 2 ateliers.', img: '/images/programs/youth.jpg', points: ['Éducation pratique', 'Activités de terrain', 'Confiance + action'] },
-    { i: '🌳', h: 'Restauration environnementale', d: 'Plantations communautaires, protection des arbres existants, restauration des zones dégradées — Nkolbisson, Minkoa-Meyos. Paysages où agriculture et arbres coexistent.', img: '/images/programs/restoration.jpg', points: ['20+ arbres plantés', 'Zones dégradées restaurées', 'Suivi communautaire'] },
-    { i: '📱', h: 'Technologie — WGC Farm App', d: 'Prototype présenté aux agriculteurs pour recueillir leurs retours, afin que la plateforme soit conçue autour de leurs besoins.', img: '/images/gallery/g13.jpg', points: ['Prototype présenté aux agriculteurs', 'Conçue autour de leurs besoins', 'Savoirs agricoles et environnementaux'] },
-  ] : [
-    { i: '🌾', h: 'Agroforestry — trees + crops', d: 'Planting and keeping trees with cash crops instead of clearing everything. Understanding the value of on-farm trees and testing tree-crop combos that support production and restoration.', img: '/images/programs/agroforestry.jpg', points: ['Tree-crop demos', 'Site-suited trees', 'Protected soils, useful shade'] },
-    { i: '👩🏾‍🌾', h: 'Farmer education', d: 'Women are 60%+ of the ag workforce. Community outreach, discussions, environmental education and feedback sessions on sustainable solutions.', img: '/images/programs/farmer-education.jpg', points: ['Village outreach', 'Agroforestry education', 'Co-created solutions'] },
-    { i: '💚', h: 'Youth eco-leadership', d: 'Training girls to become eco-leaders: understanding challenges, building confidence, acting in their communities. 13 girls trained across 2 workshops.', img: '/images/programs/youth.jpg', points: ['Hands-on learning', 'Field activities', 'Confidence + action'] },
-    { i: '🌳', h: 'Environmental restoration', d: 'Community plantings, protecting standing trees, restoring degraded areas — Nkolbisson, Minkoa-Meyos. Landscapes where farms and trees coexist.', img: '/images/programs/restoration.jpg', points: ['20+ trees planted', 'Degraded areas restored', 'Community follow-up'] },
-    { i: '📱', h: 'Technology — WGC Farm App', d: 'A prototype presented to farmers to gather feedback, so the platform is designed around their needs.', img: '/images/gallery/g13.jpg', points: ['Prototype shown to farmers', 'Designed around their needs', 'Agricultural and environmental knowledge'] },
+  const { lang } = useLang();
+  const fr = lang === 'fr';
+
+  const items = [
+    {
+      n: '01',
+      title: fr ? 'Agroforesterie : aider les arbres et les cultures à pousser ensemble' : 'Agroforestry: helping trees and crops grow together',
+      text: fr
+        ? 'WGC encourage et forme les agriculteurs à pratiquer l’agroforesterie, c’est-à-dire à planter et à entretenir des arbres aux côtés de leurs cultures sur la même parcelle. Au lieu de tout défricher avant de planter, les agriculteurs peuvent intégrer des arbres adaptés à leur système agricole. Grâce à nos sensibilisations et à nos formations, nous les aidons à comprendre l’importance des arbres dans les exploitations et à découvrir des combinaisons arbres-cultures qui soutiennent à la fois la production agricole et la restauration de l’environnement.'
+        : 'WGC encourages and educates farmers to practise agroforestry — planting and maintaining trees alongside their cash crops on the same farmland. Instead of completely clearing farmland of trees before planting crops, farmers can integrate suitable trees into their farming systems. Through outreach and education, we help farmers understand the importance of trees on farms and explore tree-crop combinations that support both agricultural production and environmental restoration.',
+      img: '/images/programs/agroforestry.jpg',
+      alt: fr ? 'Parcelle agroforestière' : 'Agroforestry plot',
+      points: fr
+        ? ['Démonstrations de combinaisons arbres-cultures', 'Des arbres adaptés aux parcelles', 'Des sols protégés et une production soutenue']
+        : ['Tree-crop combination demonstrations', 'Trees suited to the farmland', 'Protected soils and supported production'],
+    },
+    {
+      n: '02',
+      title: fr ? 'Formation des agriculteurs : mettre les agriculteurs au centre' : 'Farmer education: putting farmers at the centre',
+      text: fr
+        ? 'Parce que les femmes représentent plus de 60 % de la main-d’œuvre agricole au Cameroun, former et soutenir les agriculteurs est au cœur de notre approche. Nous travaillons avec eux à travers des sensibilisations communautaires, des discussions, de l’éducation environnementale et des sessions de retours sur des solutions agricoles durables. Notre objectif est simple : aider les agriculteurs à comprendre que les arbres et les cultures peuvent coexister, et que protéger la terre fait partie d’une agriculture productive.'
+        : 'Because women represent more than 60% of Cameroon’s agricultural workforce, educating and empowering farmers is central to our approach. We engage farmers through community outreach, farmer discussions, environmental education, agroforestry education and feedback sessions on sustainable farming solutions. Our goal is simple: help farmers understand that trees and crops can coexist, and that protecting the land is part of productive farming.',
+      img: '/images/programs/farmer-education.jpg',
+      alt: fr ? 'Échange avec des agriculteurs' : 'Exchange with farmers',
+      points: fr
+        ? ['Sensibilisation communautaire', 'Discussions avec les agriculteurs', 'Éducation à l’agroforesterie']
+        : ['Community outreach', 'Farmer discussions', 'Agroforestry education'],
+    },
+    {
+      n: '03',
+      title: fr ? 'Éco-leadership des jeunes : former la prochaine génération' : 'Youth eco-leadership: building the next generation',
+      text: fr
+        ? 'WGC forme les jeunes filles pour qu’elles deviennent la prochaine génération de leaders environnementaux. Grâce à l’éducation environnementale, à des activités pratiques et à des expériences de terrain, nous les aidons à comprendre les défis environnementaux et à développer les connaissances et la confiance nécessaires pour agir dans leurs communautés. Nous pensons que les jeunes ne devraient pas seulement apprendre les problèmes environnementaux, mais aussi avoir l’occasion de faire partie de la solution.'
+        : 'WGC trains young girls to become the next generation of environmental leaders. Through environmental education, practical activities and hands-on experiences, we help girls understand environmental challenges and develop the knowledge and confidence to take action in their communities. We believe young people should not only learn about environmental problems — they should also have the opportunity to become part of the solution.',
+      img: '/images/programs/youth.jpg',
+      alt: fr ? 'Atelier avec des jeunes' : 'Workshop with young people',
+      points: fr
+        ? ['Éducation environnementale', 'Activités pratiques', 'Confiance et passage à l’action']
+        : ['Environmental education', 'Practical activities', 'Confidence to take action'],
+    },
+    {
+      n: '04',
+      title: fr ? 'Restauration environnementale : restaurer et protéger' : 'Environmental restoration: restoring and protecting',
+      text: fr
+        ? 'Nous participons à des activités de plantation d’arbres et de restauration de l’environnement, tout en encourageant les communautés à protéger les arbres existants et à restaurer les zones dégradées. Nos activités de restauration sont liées à notre objectif plus large : promouvoir des paysages où l’agriculture et les arbres peuvent coexister.'
+        : 'We participate in tree-planting and environmental restoration activities while encouraging communities to protect existing trees and restore degraded areas. Our restoration work is connected to our broader goal of promoting landscapes where agriculture and trees can coexist.',
+      img: '/images/programs/restoration.jpg',
+      alt: fr ? 'Zone en cours de restauration' : 'Area under restoration',
+      points: fr
+        ? ['Plantations communautaires', 'Protection des arbres existants', 'Restauration des zones dégradées']
+        : ['Community plantings', 'Protecting standing trees', 'Restoring degraded areas'],
+    },
   ];
+
   return (
-    <div className="pt-28">
-      <div className="mx-auto max-w-7xl px-5"><SectionHeading kicker={fr ? 'Programmes' : 'Programmes'} title={fr ? 'Cinq façons de faire reverdir' : 'Five ways we re-green'} lead={fr ? 'Chaque programme est une porte d’entrée vers un Cameroun où agriculture productive et forêts saines coexistent.' : 'Each programme is a doorway into a Cameroon where productive farms and healthy forests coexist.'} /></div>
-      <div className="mx-auto mt-10 grid max-w-7xl gap-8 px-5 pb-16">
+    <div className="pt-14 sm:pt-20">
+      <div className="mx-auto max-w-3xl px-5 text-center">
+        <Eyebrow>{fr ? 'Nos programmes' : 'Our programmes'}</Eyebrow>
+        <h1 className="mt-4 text-4xl font-medium sm:text-5xl">{fr ? 'Quatre façons d’agir, un même objectif' : 'Four ways we act, one shared goal'}</h1>
+        <p className="mx-auto mt-6 max-w-2xl text-lg text-foresttext/70 dark:text-white/70">
+          {fr
+            ? 'Chaque programme répond à une partie du même défi : permettre une agriculture productive et des forêts en bonne santé au Cameroun.'
+            : 'Each programme answers part of the same challenge: making productive farming and healthy forests possible together in Cameroon.'}
+        </p>
+      </div>
+
+      <div className="mx-auto mt-14 max-w-6xl space-y-20 px-5 pb-4">
         {items.map((p, k) => (
-          <Reveal key={k}>
-            <article className={`grid overflow-hidden rounded-[32px] border border-forest/15 bg-white shadow-glow dark:border-white/10 dark:bg-carddark lg:grid-cols-2 ${k % 2 ? 'lg:[&>*:first-child]:order-2' : ''}`}>
-              <div className="relative min-h-64"><img src={p.img} alt="" loading="lazy" className="absolute inset-0 h-full w-full object-cover" /><div className="absolute inset-0 bg-gradient-to-t from-forest/60 to-transparent" /><span className="absolute left-5 top-5 rounded-full bg-white/90 px-4 py-2 text-2xl shadow dark:bg-forestblack/80">{p.i}</span></div>
-              <div className="p-7 sm:p-10">
-                <p className="text-xs font-extrabold uppercase tracking-[0.25em] text-leaf">0{k + 1}</p>
-                <h2 className="mt-2 font-serif text-3xl font-bold text-forest dark:text-white sm:text-4xl">{p.h}</h2>
-                <p className="mt-3 leading-relaxed text-foresttext/75 dark:text-white/70">{p.d}</p>
-                <ul className="mt-4 space-y-2">{p.points.map((x) => (<li key={x} className="flex items-center gap-2 text-sm font-semibold"><span className="text-fresh">🌿</span>{x}</li>))}</ul>
-                <a href="/get-involved" className="mt-6 inline-block rounded-full bg-gradient-to-r from-forest to-fresh px-6 py-3 text-sm font-bold text-white shadow-glow hover:scale-105 transition">→ {fr ? 'Participer à ce programme' : 'Join this programme'}</a>
+          <Reveal key={p.n}>
+            <article className={`grid items-center gap-8 lg:grid-cols-2 lg:gap-14 ${k % 2 ? 'lg:[&>*:first-child]:order-2' : ''}`}>
+              <div>
+                <img src={p.img} alt={p.alt} loading="lazy" className="img-soft-lg aspect-[4/3] w-full object-cover shadow-card" />
+              </div>
+              <div>
+                <p className="text-xs font-bold uppercase tracking-[0.16em] text-forest/50 dark:text-white/50">{p.n}</p>
+                <h2 className="mt-3 text-2xl font-medium sm:text-3xl">{p.title}</h2>
+                <p className="mt-4 leading-relaxed text-foresttext/70 dark:text-white/65">{p.text}</p>
+                <ul className="mt-5 space-y-2">
+                  {p.points.map((x) => (
+                    <li key={x} className="flex items-start gap-2 text-[15px] font-medium">
+                      <FiCheck className="mt-1 shrink-0 text-forest dark:text-white" size={16} /> {x}
+                    </li>
+                  ))}
+                </ul>
               </div>
             </article>
           </Reveal>
         ))}
-        {/* Before / after */}
+
         <Reveal>
-          <div className="rounded-[32px] bg-gradient-to-br from-earth to-forest p-8 text-white sm:p-10">
-            <h2 className="font-serif text-3xl font-bold">🔄 {fr ? 'Avant / Après : la parcelle agroforestière' : 'Before / After: the agroforestry plot'}</h2>
-            <div className="mt-6 grid gap-4 sm:grid-cols-2">
-              <div className="rounded-3xl bg-black/25 p-6"><p className="font-extrabold uppercase tracking-widest text-amber">🪵 {fr ? 'Avant' : 'Before'}</p><p className="mt-2 text-sm text-white/85">{fr ? 'Champ entièrement défriché : sol nu, érosion, chaleur, rendements fragiles.' : 'Fully cleared field: bare soil, erosion, heat, fragile yields.'}</p></div>
-              <div className="rounded-3xl bg-fresh/20 p-6 ring-1 ring-fresh/50"><p className="font-extrabold uppercase tracking-widest text-fresh">🌳 {fr ? 'Après WGC' : 'After WGC'}</p><p className="mt-2 text-sm text-white/90">{fr ? 'Arbres + cultures : ombre, sols vivants, biodiversité, revenus diversifiés.' : 'Trees + crops: shade, living soils, biodiversity, diversified income.'}</p></div>
+          <div className="card-clean grid gap-6 p-8 sm:grid-cols-2 sm:p-10">
+            <div>
+              <Eyebrow>{fr ? 'Technologie' : 'Technology'}</Eyebrow>
+              <h2 className="mt-3 text-2xl font-medium">WGC Farm App</h2>
+              <p className="mt-3 text-foresttext/70 dark:text-white/65">
+                {fr
+                  ? 'Nous avons développé un prototype de l’application WGC Farm et nous avons commencé à le présenter aux agriculteurs pour recueillir leurs retours. L’objectif est simple : concevoir une plateforme vraiment adaptée à leurs besoins, qui rend les connaissances agricoles et environnementales plus accessibles et utiles aux communautés.'
+                  : 'We have developed a prototype of the WGC Farm App and begun presenting it to farmers to gather feedback. The aim is simple: design a platform around their needs, making agricultural and environmental knowledge more accessible and useful to communities.'}
+              </p>
             </div>
+            <img src="/images/gallery/g13.jpg" alt={fr ? 'Présentation d’outils numériques à un agriculteur' : 'Showing digital tools to a farmer'} loading="lazy" className="img-soft aspect-[16/10] w-full object-cover" />
           </div>
         </Reveal>
+
+        <div className="flex flex-wrap gap-3 pb-10">
+          <Link href="/get-involved" className="btn-primary">{fr ? 'Participer à un programme' : 'Join a programme'} <FiArrowRight size={16} /></Link>
+          <Link href="/impact" className="btn-secondary">{fr ? 'Voir notre impact' : 'See our impact'}</Link>
+        </div>
       </div>
     </div>
   );

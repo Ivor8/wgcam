@@ -1,7 +1,8 @@
 'use client';
 import { useState } from 'react';
+import { FiChevronLeft, FiChevronRight, FiX } from 'react-icons/fi';
 import { useLang } from '../../components/Providers';
-import { Reveal, SectionHeading } from '../../components/ui';
+import { Eyebrow, Reveal } from '../../components/ui';
 
 type Shot = { src: string; en: string; fr: string };
 
@@ -27,36 +28,44 @@ const shots: Shot[] = [
 ];
 
 export default function Gallery() {
-  const { lang } = useLang(); const fr = lang === 'fr';
+  const { lang } = useLang();
+  const fr = lang === 'fr';
   const [light, setLight] = useState<number | null>(null);
+
   return (
-    <div className="pt-28">
-      <div className="mx-auto max-w-7xl px-5"><SectionHeading kicker={fr ? 'Galerie' : 'Gallery'} title={fr ? 'WGC en images réelles' : 'WGC in real pictures'} lead={fr ? 'Plantations, pépinière, agriculteurs, communautés : nos propres photos de terrain. Survolez pour la légende, cliquez pour le plein écran.' : 'Plantings, nursery, farmers, communities: our own field photos. Hover for the caption, click for fullscreen.'} />
-        <div className="masonry mt-10">
-          {shots.map((s, i) => {
-            const cap = fr ? s.fr : s.en;
-            return (
-              <Reveal key={s.src}>
-                <button onClick={() => setLight(i)} className={`group relative block w-full overflow-hidden text-left ${i % 2 ? 'rounded-[28px_80px_28px_80px]' : 'rounded-[80px_28px_80px_28px]'} border border-forest/15 dark:border-white/10`} aria-label={`Open photo: ${cap}`}>
-                  <img src={s.src} alt={cap} loading="lazy" className="w-full object-cover transition duration-700 group-hover:scale-110" />
-                  <span className="absolute inset-0 bg-gradient-to-t from-forest/80 via-transparent to-transparent opacity-0 transition group-hover:opacity-100" />
-                  <span className="absolute bottom-4 left-4 right-4 translate-y-3 font-serif text-lg text-white opacity-0 transition group-hover:translate-y-0 group-hover:opacity-100">🌿 {cap}</span>
-                </button>
-              </Reveal>
-            );
-          })}
-        </div>
+    <div className="pt-14 sm:pt-20">
+      <div className="mx-auto max-w-3xl px-5 text-center">
+        <Eyebrow>{fr ? 'Galerie' : 'Gallery'}</Eyebrow>
+        <h1 className="mt-4 text-4xl font-medium sm:text-5xl">{fr ? 'WGC en images' : 'WGC in pictures'}</h1>
+        <p className="mx-auto mt-6 max-w-2xl text-lg text-foresttext/70 dark:text-white/70">
+          {fr ? 'Nos plantations, notre pépinière et nos échanges avec les agriculteurs et les communautés.' : 'Our plantings, our nursery and our exchanges with farmers and communities.'}
+        </p>
       </div>
+
+      <div className="mx-auto mt-12 grid max-w-6xl grid-cols-1 gap-5 px-5 sm:grid-cols-2 lg:grid-cols-3">
+        {shots.map((s, i) => {
+          const cap = fr ? s.fr : s.en;
+          return (
+            <Reveal key={s.src}>
+              <button onClick={() => setLight(i)} className="group block w-full overflow-hidden rounded-2xl border border-forest/10 text-left dark:border-white/10" aria-label={`Open photo: ${cap}`}>
+                <img src={s.src} alt={cap} loading="lazy" className="aspect-[4/3] w-full object-cover transition duration-500 group-hover:scale-[1.03]" />
+                <span className="block bg-white p-4 text-sm font-medium dark:bg-carddark">{cap}</span>
+              </button>
+            </Reveal>
+          );
+        })}
+      </div>
+
       {light !== null && (
         <div className="fixed inset-0 z-[90] flex items-center justify-center bg-black/85 p-4" role="dialog" aria-modal="true" aria-label="Photo viewer" onClick={() => setLight(null)}>
-          <figure className="max-w-3xl w-full overflow-hidden rounded-3xl bg-white dark:bg-carddark" onClick={(e) => e.stopPropagation()}>
-            <img src={shots[light].src} alt={fr ? shots[light].fr : shots[light].en} className="max-h-[75vh] w-full object-contain bg-black" />
-            <figcaption className="flex items-center justify-between p-4 text-sm font-bold">
-              <span>🌿 {fr ? shots[light].fr : shots[light].en}</span>
+          <figure className="w-full max-w-3xl overflow-hidden rounded-2xl bg-white dark:bg-carddark" onClick={(e) => e.stopPropagation()}>
+            <img src={shots[light].src} alt={fr ? shots[light].fr : shots[light].en} className="max-h-[75vh] w-full bg-black object-contain" />
+            <figcaption className="flex items-center justify-between gap-3 p-4 text-sm font-medium">
+              <span>{fr ? shots[light].fr : shots[light].en}</span>
               <span className="flex gap-2">
-                <button className="rounded-full bg-fog px-4 py-2 dark:bg-white/10" onClick={() => setLight((light + shots.length - 1) % shots.length)} aria-label="Previous">←</button>
-                <button className="rounded-full bg-fog px-4 py-2 dark:bg-white/10" onClick={() => setLight((light + 1) % shots.length)} aria-label="Next">→</button>
-                <button className="rounded-full bg-forest px-4 py-2 text-white" onClick={() => setLight(null)}>✕</button>
+                <button className="rounded-full border border-forest/20 p-2" onClick={() => setLight((light + shots.length - 1) % shots.length)} aria-label="Previous photo"><FiChevronLeft size={18} /></button>
+                <button className="rounded-full border border-forest/20 p-2" onClick={() => setLight((light + 1) % shots.length)} aria-label="Next photo"><FiChevronRight size={18} /></button>
+                <button className="rounded-full bg-forest p-2 text-white" onClick={() => setLight(null)} aria-label="Close"><FiX size={18} /></button>
               </span>
             </figcaption>
           </figure>

@@ -29,10 +29,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Cormorant+Garamond:wght@500;600&family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
         <link rel="icon" href="/logo.jpg" />
       </head>
-      <body id="top" className="bg-naturewhite text-foresttext dark:bg-forestblack dark:text-white">
+      <body id="top" className="bg-cream text-foresttext dark:bg-forestblack dark:text-white">
         <Providers>
           <Script id="org-schema" type="application/ld+json">{JSON.stringify(orgSchema)}</Script>
           <Preloader />

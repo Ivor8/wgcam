@@ -14,18 +14,14 @@ const ThemeCtx = createContext<{ dark: boolean; toggle: () => void }>({ dark: fa
 export function Providers({ children }: { children: React.ReactNode }) {
   const [lang, setLangState] = useState<Lang>('en');
   const [dark, setDark] = useState(false);
-  const [ready, setReady] = useState(false);
 
   useEffect(() => {
     try {
       const l = localStorage.getItem('wgc-lang') as Lang | null;
       if (l === 'en' || l === 'fr') setLangState(l);
       const d = localStorage.getItem('wgc-theme');
-      if (d === 'dark' || (!d && window.matchMedia('(prefers-color-scheme: dark)').matches && false)) {
-        setDark(true);
-      }
+      if (d === 'dark') setDark(true);
     } catch {}
-    setReady(true);
   }, []);
 
   useEffect(() => {
@@ -36,22 +32,6 @@ export function Providers({ children }: { children: React.ReactNode }) {
       localStorage.setItem('wgc-lang', lang);
     } catch {}
   }, [dark, lang]);
-
-  // Lenis smooth scrolling
-  useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    let raf = 0;
-    let lenis: any = null;
-    (async () => {
-      try {
-        const Lenis = (await import('lenis')).default;
-        lenis = new Lenis({ lerp: 0.09, wheelMultiplier: 1 });
-        const loop = (t: number) => { lenis.raf(t); raf = requestAnimationFrame(loop); };
-        raf = requestAnimationFrame(loop);
-      } catch {}
-    })();
-    return () => { cancelAnimationFrame(raf); try { lenis?.destroy(); } catch {} };
-  }, []);
 
   const setLang = (l: Lang) => setLangState(l);
   const t = (en: string, fr: string) => (lang === 'fr' ? fr : en);
