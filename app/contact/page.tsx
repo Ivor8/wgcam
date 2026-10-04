@@ -1,13 +1,14 @@
 'use client';
 import { useState } from 'react';
-import { FiCheck, FiMapPin, FiMessageCircle, FiPhone, FiSend } from 'react-icons/fi';
+import { FiCheck, FiMapPin, FiMessageCircle, FiPhone } from 'react-icons/fi';
 import { useLang } from '../../components/Providers';
-import { Eyebrow, Reveal } from '../../components/ui';
+import { Eyebrow, Reveal, openWhatsApp, whatsappLink } from '../../components/ui';
 
 export default function Contact() {
   const { lang } = useLang();
   const fr = lang === 'fr';
   const [sent, setSent] = useState(false);
+  const [waUrl, setWaUrl] = useState('');
 
   return (
     <div className="pt-14 sm:pt-20">
@@ -28,41 +29,57 @@ export default function Contact() {
             {sent ? (
               <div className="mt-6 rounded-2xl bg-sage p-6 text-center dark:bg-white/10" role="status">
                 <FiCheck className="mx-auto text-forest dark:text-white" size={28} />
-                <p className="mt-2 font-serif text-xl font-semibold">{fr ? 'Merci, votre message est bien envoyé.' : 'Thank you, your message has been sent.'}</p>
-                <p className="mt-1 text-sm text-foresttext/65 dark:text-white/60">{fr ? 'Notre équipe vous répondra dès que possible.' : 'Our team will reply as soon as possible.'}</p>
+                <p className="mt-2 font-serif text-xl font-semibold">{fr ? 'Merci ! Votre message s’ouvre dans WhatsApp.' : 'Thank you! Your message is opening in WhatsApp.'}</p>
+                <p className="mt-1 text-sm text-foresttext/65 dark:text-white/60">{fr ? 'Appuyez sur Envoyer dans WhatsApp pour nous le faire parvenir.' : 'Press Send in WhatsApp to deliver it to us.'}</p>
+                {waUrl && (
+                  <a href={waUrl} target="_blank" rel="noopener" className="btn-primary mt-5">
+                    <FiMessageCircle size={16} /> {fr ? 'Ouvrir WhatsApp' : 'Open WhatsApp'}
+                  </a>
+                )}
               </div>
             ) : (
               <form
                 className="mt-6 space-y-4"
                 onSubmit={(e) => {
                   e.preventDefault();
-                  if (!(e.currentTarget as HTMLFormElement).checkValidity()) {
-                    (e.currentTarget as HTMLFormElement).reportValidity();
+                  const form = e.currentTarget as HTMLFormElement;
+                  if (!form.checkValidity()) {
+                    form.reportValidity();
                     return;
                   }
+                  const data = new FormData(form);
+                  const name = String(data.get('name') || '');
+                  const email = String(data.get('email') || '');
+                  const phone = String(data.get('phone') || '');
+                  const message = String(data.get('message') || '');
+                  const text = fr
+                    ? `Nouveau message — site WGC (Contact)\nNom: ${name}\nEmail: ${email}\nTéléphone: ${phone || '—'}\nMessage: ${message}`
+                    : `New message — WGC website (Contact)\nName: ${name}\nEmail: ${email}\nPhone: ${phone || '—'}\nMessage: ${message}`;
+                  setWaUrl(whatsappLink(text));
+                  openWhatsApp(text);
                   setSent(true);
                 }}
               >
                 <div className="grid gap-4 sm:grid-cols-2">
                   <label className="block">
                     <span className="mb-1.5 block text-xs font-bold uppercase tracking-wider">{fr ? 'Nom complet' : 'Full name'} *</span>
-                    <input required placeholder={fr ? 'Votre nom' : 'Your name'} className="w-full rounded-xl border border-forest/20 bg-cream px-4 py-3 text-sm focus:border-forest focus:outline-none dark:border-white/15 dark:bg-forestblack" />
+                    <input name="name" required placeholder={fr ? 'Votre nom' : 'Your name'} className="w-full rounded-xl border border-forest/20 bg-cream px-4 py-3 text-sm focus:border-forest focus:outline-none dark:border-white/15 dark:bg-forestblack" />
                   </label>
                   <label className="block">
                     <span className="mb-1.5 block text-xs font-bold uppercase tracking-wider">Email *</span>
-                    <input required type="email" placeholder="you@email.com" className="w-full rounded-xl border border-forest/20 bg-cream px-4 py-3 text-sm focus:border-forest focus:outline-none dark:border-white/15 dark:bg-forestblack" />
+                    <input name="email" required type="email" placeholder="you@email.com" className="w-full rounded-xl border border-forest/20 bg-cream px-4 py-3 text-sm focus:border-forest focus:outline-none dark:border-white/15 dark:bg-forestblack" />
                   </label>
                 </div>
                 <label className="block">
                   <span className="mb-1.5 block text-xs font-bold uppercase tracking-wider">{fr ? 'Téléphone' : 'Phone'}</span>
-                  <input placeholder="+237 ..." className="w-full rounded-xl border border-forest/20 bg-cream px-4 py-3 text-sm focus:border-forest focus:outline-none dark:border-white/15 dark:bg-forestblack" />
+                  <input name="phone" placeholder="+237 ..." className="w-full rounded-xl border border-forest/20 bg-cream px-4 py-3 text-sm focus:border-forest focus:outline-none dark:border-white/15 dark:bg-forestblack" />
                 </label>
                 <label className="block">
                   <span className="mb-1.5 block text-xs font-bold uppercase tracking-wider">Message *</span>
-                  <textarea required rows={5} placeholder={fr ? 'Dites-nous comment vous souhaitez aider ou collaborer.' : 'Tell us how you would like to help or collaborate.'} className="w-full rounded-xl border border-forest/20 bg-cream px-4 py-3 text-sm focus:border-forest focus:outline-none dark:border-white/15 dark:bg-forestblack" />
+                  <textarea name="message" required rows={5} placeholder={fr ? 'Dites-nous comment vous souhaitez aider ou collaborer.' : 'Tell us how you would like to help or collaborate.'} className="w-full rounded-xl border border-forest/20 bg-cream px-4 py-3 text-sm focus:border-forest focus:outline-none dark:border-white/15 dark:bg-forestblack" />
                 </label>
                 <button className="btn-primary w-full justify-center">
-                  <FiSend size={16} /> {fr ? 'Envoyer le message' : 'Send message'}
+                  <FiMessageCircle size={16} /> {fr ? 'Envoyer via WhatsApp' : 'Send via WhatsApp'}
                 </button>
               </form>
             )}

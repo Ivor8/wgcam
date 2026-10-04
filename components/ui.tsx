@@ -198,3 +198,21 @@ export function Counter({ to, suffix = '', label, sub }: { to: number; suffix?: 
 export function RootDivider() {
   return <div aria-hidden className="mx-auto my-0 h-px max-w-7xl bg-forest/10 dark:bg-white/10" />;
 }
+
+/* WhatsApp form delivery — collects form data into a pre-written message
+   and opens it in WhatsApp (mobile app or WhatsApp Web on desktop). */
+export const WGC_WHATSAPP = '237652595666';
+
+export function whatsappLink(message: string) {
+  return `https://wa.me/${WGC_WHATSAPP}?text=${encodeURIComponent(message)}`;
+}
+
+export function openWhatsApp(message: string) {
+  const url = whatsappLink(message);
+  try {
+    window.open(url, '_blank', 'noopener');
+  } catch {
+    window.location.href = url;
+  }
+  return url;
+}

@@ -1,14 +1,15 @@
 'use client';
 import { useState } from 'react';
-import { FiCheck, FiSend } from 'react-icons/fi';
+import { FiCheck, FiMessageCircle } from 'react-icons/fi';
 import { useLang } from '../../components/Providers';
-import { Eyebrow, Reveal } from '../../components/ui';
+import { Eyebrow, Reveal, openWhatsApp, whatsappLink } from '../../components/ui';
 
 export default function GetInvolved() {
   const { lang } = useLang();
   const fr = lang === 'fr';
   const [tab, setTab] = useState('volunteer');
   const [done, setDone] = useState(false);
+  const [waUrl, setWaUrl] = useState('');
 
   const tabs = [
     { k: 'volunteer', en: 'Volunteer', fr: 'Bénévole' },
@@ -72,37 +73,55 @@ export default function GetInvolved() {
               {done ? (
                 <div className="p-6 text-center" role="status">
                   <FiCheck className="mx-auto text-forest" size={32} />
-                  <p className="mt-3 font-serif text-2xl font-semibold">{fr ? 'Merci, votre message est bien envoyé.' : 'Thank you, your message has been sent.'}</p>
-                  <p className="mt-1 text-sm text-foresttext/60">{fr ? 'Nous vous répondrons très vite.' : 'We will reply very soon.'}</p>
+                  <p className="mt-3 font-serif text-2xl font-semibold">{fr ? 'Merci ! Votre message s’ouvre dans WhatsApp.' : 'Thank you! Your message is opening in WhatsApp.'}</p>
+                  <p className="mt-1 text-sm text-foresttext/60">{fr ? 'Appuyez sur Envoyer dans WhatsApp pour nous le faire parvenir.' : 'Press Send in WhatsApp to deliver it to us.'}</p>
+                  {waUrl && (
+                    <a href={waUrl} target="_blank" rel="noopener" className="btn-primary mt-5">
+                      <FiMessageCircle size={16} /> {fr ? 'Ouvrir WhatsApp' : 'Open WhatsApp'}
+                    </a>
+                  )}
                 </div>
               ) : (
                 <form
                   className="space-y-4"
                   onSubmit={(e) => {
                     e.preventDefault();
-                    if (!(e.currentTarget as HTMLFormElement).checkValidity()) {
-                      (e.currentTarget as HTMLFormElement).reportValidity();
+                    const form = e.currentTarget as HTMLFormElement;
+                    if (!form.checkValidity()) {
+                      form.reportValidity();
                       return;
                     }
+                    const data = new FormData(form);
+                    const name = String(data.get('name') || '');
+                    const email = String(data.get('email') || '');
+                    const message = String(data.get('message') || '');
+                    const interest = fr
+                      ? tabs.find((x) => x.k === tab)!.fr
+                      : tabs.find((x) => x.k === tab)!.en;
+                    const text = fr
+                      ? `Nouvelle demande — site WGC (S’impliquer: ${interest})\nNom: ${name}\nEmail: ${email}\nMessage: ${message}`
+                      : `New request — WGC website (Get involved: ${interest})\nName: ${name}\nEmail: ${email}\nMessage: ${message}`;
+                    setWaUrl(whatsappLink(text));
+                    openWhatsApp(text);
                     setDone(true);
                   }}
                 >
                   <div className="grid gap-4 sm:grid-cols-2">
                     <label className="block">
                       <span className="mb-1 block text-xs font-bold uppercase tracking-wider">{fr ? 'Nom' : 'Name'} *</span>
-                      <input required className="w-full rounded-xl border border-forest/20 px-4 py-3 text-sm dark:border-white/15 dark:bg-forestblack" placeholder={fr ? 'Votre nom' : 'Your name'} />
+                      <input name="name" required className="w-full rounded-xl border border-forest/20 px-4 py-3 text-sm dark:border-white/15 dark:bg-forestblack" placeholder={fr ? 'Votre nom' : 'Your name'} />
                     </label>
                     <label className="block">
                       <span className="mb-1 block text-xs font-bold uppercase tracking-wider">Email *</span>
-                      <input required type="email" className="w-full rounded-xl border border-forest/20 px-4 py-3 text-sm dark:border-white/15 dark:bg-forestblack" placeholder="you@email.com" />
+                      <input name="email" required type="email" className="w-full rounded-xl border border-forest/20 px-4 py-3 text-sm dark:border-white/15 dark:bg-forestblack" placeholder="you@email.com" />
                     </label>
                   </div>
                   <label className="block">
                     <span className="mb-1 block text-xs font-bold uppercase tracking-wider">Message *</span>
-                    <textarea required rows={4} className="w-full rounded-xl border border-forest/20 px-4 py-3 text-sm dark:border-white/15 dark:bg-forestblack" placeholder={fr ? 'Parlez-nous de vous et de votre envie de contribuer.' : 'Tell us about yourself and how you would like to contribute.'} />
+                    <textarea name="message" required rows={4} className="w-full rounded-xl border border-forest/20 px-4 py-3 text-sm dark:border-white/15 dark:bg-forestblack" placeholder={fr ? 'Parlez-nous de vous et de votre envie de contribuer.' : 'Tell us about yourself and how you would like to contribute.'} />
                   </label>
                   <button className="btn-primary w-full justify-center">
-                    <FiSend size={16} /> {fr ? 'Envoyer' : 'Send'}
+                    <FiMessageCircle size={16} /> {fr ? 'Envoyer via WhatsApp' : 'Send via WhatsApp'}
                   </button>
                 </form>
               )}

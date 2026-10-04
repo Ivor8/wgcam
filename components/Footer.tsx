@@ -1,11 +1,15 @@
 'use client';
 import Link from 'next/link';
+import { useState } from 'react';
 import { FiMapPin, FiPhone, FiMessageCircle } from 'react-icons/fi';
 import { useLang } from './Providers';
+import { openWhatsApp, whatsappLink } from './ui';
 
 export default function Footer() {
   const { lang, setLang } = useLang();
   const fr = lang === 'fr';
+  const [nlDone, setNlDone] = useState(false);
+  const [nlUrl, setNlUrl] = useState('');
 
   return (
     <footer className="mt-24 border-t border-forest/10 bg-white dark:border-white/10 dark:bg-jungle" aria-label="Footer">
@@ -66,24 +70,45 @@ export default function Footer() {
               </a>
             </li>
           </ul>
+          {nlDone ? (
+            <p className="mt-5 rounded-xl bg-sage p-3 text-sm font-medium dark:bg-white/10">
+              {fr ? 'Merci ! Touchez ci-dessous pour confirmer dans WhatsApp.' : 'Thank you! Tap below to confirm in WhatsApp.'}{' '}
+              {nlUrl && (
+                <a href={nlUrl} target="_blank" rel="noopener" className="font-bold underline">
+                  WhatsApp
+                </a>
+              )}
+            </p>
+          ) : (
           <form
             className="mt-5"
             onSubmit={(e) => {
               e.preventDefault();
-              const f = e.currentTarget;
-              f.innerHTML = `<p class='rounded-xl bg-sage p-3 text-sm font-medium'>${fr ? 'Merci. Vous êtes bien inscrit(e).' : 'Thank you. You are subscribed.'}</p>`;
+              const form = e.currentTarget as HTMLFormElement;
+              if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+              }
+              const email = String(new FormData(form).get('newsletter-email') || '');
+              const text = fr
+                ? `Inscription infolettre — site WGC\nEmail: ${email}`
+                : `Newsletter signup — WGC website\nEmail: ${email}`;
+              setNlUrl(whatsappLink(text));
+              openWhatsApp(text);
+              setNlDone(true);
             }}
           >
             <label htmlFor="nl" className="text-sm font-medium">
               {fr ? 'Recevoir nos nouvelles' : 'Get our updates'}
             </label>
             <div className="mt-2 flex overflow-hidden rounded-full border border-forest/15 bg-cream p-1 dark:border-white/15 dark:bg-forestblack">
-              <input id="nl" type="email" required placeholder="you@email.com" className="w-full bg-transparent px-4 text-sm focus:outline-none" />
-              <button className="shrink-0 rounded-full bg-forest px-5 py-2.5 text-sm font-semibold text-white" aria-label="Subscribe">
-                OK
+              <input id="nl" name="newsletter-email" type="email" required placeholder="you@email.com" className="w-full bg-transparent px-4 text-sm focus:outline-none" />
+              <button className="flex shrink-0 items-center gap-1.5 rounded-full bg-forest px-5 py-2.5 text-sm font-semibold text-white" aria-label="Subscribe via WhatsApp">
+                <FiMessageCircle size={15} /> OK
               </button>
             </div>
           </form>
+          )}
         </div>
 
         <div>
