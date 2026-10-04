@@ -7,8 +7,8 @@ import { useLang } from '../components/Providers';
 import { Counter, Eyebrow, Reveal, SectionHeading } from '../components/ui';
 
 const HERO_SLIDES = [
-  { src: '/images/gallery/g05.jpg', en: 'Planting together in the field', fr: 'Plantation collective au champ' },
   { src: '/images/gallery/g02.jpg', en: 'Young seedlings at the nursery', fr: 'Jeunes plants à la pépinière' },
+  { src: '/images/gallery/g05.jpg', en: 'Planting together in the field', fr: 'Plantation collective au champ' },
   { src: '/images/gallery/g11.jpg', en: 'The team at the nursery', fr: 'L’équipe à la pépinière' },
   { src: '/images/gallery/g03.jpg', en: 'Planting a seedling', fr: 'Plantation d’un jeune arbre' },
   { src: '/images/gallery/g16.jpg', en: 'With communities', fr: 'Avec les communautés' },
@@ -80,7 +80,7 @@ function Hero({ fr }: { fr: boolean }) {
         <div className="absolute inset-0 bg-gradient-to-r from-black/30 via-transparent to-transparent" />
       </div>
 
-      <div className="relative mx-auto max-w-7xl px-5 pb-24 pt-12 sm:pb-32 sm:pt-16">
+      <div className="relative mx-auto max-w-7xl px-5 pb-24 pt-28 sm:pb-32 sm:pt-32">
         <div className="max-w-2xl">
           <p className="hero-rise hero-rise-1 inline-flex items-center gap-2 rounded-full bg-white/15 px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] backdrop-blur">
             <span className="relative flex h-2 w-2">
@@ -264,8 +264,8 @@ export default function Home() {
         <div className="mt-12 divide-y divide-forest/10 border-y border-forest/10 dark:divide-white/10 dark:border-white/10">
           {focus.map((f, i) => (
             <Reveal key={i}>
-              <div className="grid gap-3 py-7 sm:grid-cols-[48px_1fr_2fr] sm:items-start sm:gap-6">
-                <span className="flex h-12 w-12 items-center justify-center rounded-full bg-sage text-forest dark:bg-white/10 dark:text-white">
+              <div className="group grid gap-3 rounded-2xl py-7 transition-colors duration-300 hover:bg-white dark:hover:bg-white/5 sm:grid-cols-[48px_1fr_2fr] sm:items-start sm:gap-6 sm:px-4 sm:[margin-inline:-1rem]">
+                <span className="flex h-12 w-12 items-center justify-center rounded-full bg-sage text-forest transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-6 dark:bg-white/10 dark:text-white">
                   <f.icon size={22} strokeWidth={1.8} />
                 </span>
                 <h3 className="font-serif text-xl font-semibold sm:text-2xl">{f.title}</h3>
